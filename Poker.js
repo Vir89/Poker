@@ -9,7 +9,6 @@ const straightCards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "
 
 const suits = ["diamonds", "hearts", "spades", "clubs"];
 
-
 var deck, players;
 
 function initDeck(){
@@ -76,19 +75,58 @@ function newRound() {
         }
     }
 
-    //Check winner with round array
+    let handValues = new Array();
+
     for(let i=0; i<round.length; i++){
-        console.log("Player " + (i+1) + " has royal flush straight: " + isRoyalFlushStraight(round[i]));
-        console.log("Player " + (i+1) + " has straight flush: " + isStraightFlush(round[i]));
-        console.log("Player " + (i+1) + " has four of a kind: " + isFourOfAKind(round[i]));
-        console.log("Player " + (i+1) + " has full house: " + isFullHouse(round[i]));
-        console.log("Player " + (i+1) + " has flush: " + isFlush(round[i]));
-        console.log("Player " + (i+1) + " has straight: " + isStraight(round[i]));
-        console.log("Player " + (i+1) + " has three of a kind: " + isThreeOfAKind(round[i]));
-        console.log("Player " + (i+1) + " has two pairs: " + isTwoPairs(round[i]));
-        console.log("Player " + (i+1) + " has pair: " + isPair(round[i]));
+        console.log("Checking Player " + (i+1) + " hand...");
+        handValues.push(checkPlayerHand(round[i]));
     }
 
+    let winner = 0;
+
+    for(let i=0; i<handValues.length; i++){
+        if(handValues[i] > handValues[winner]){
+            winner = i;
+        }
+    }
+
+    // TODO - Check tie-breaker
+
+    console.log("And the winner is... PLAYER " + (winner+1) + "!!!");
+
+}
+
+function checkPlayerHand(playerHand){
+
+    if(isRoyalFlushStraight(playerHand)){
+        console.log("Player has royal flush straight");
+        return 9;
+    }else if(isStraightFlush(playerHand)){
+        console.log("Player has straight flush");
+        return 8;
+    }else if(isFourOfAKind(playerHand)){
+        console.log("Player has four of a kind");
+        return 7;
+    }else if(isFullHouse(playerHand)){
+        console.log("Player has full house");
+        return 6;
+    }else if(isFlush(playerHand)){
+        console.log("Player has flush");
+        return 5;
+    }else if(isStraight(playerHand)){
+        console.log("Player has straight");
+        return 4;
+    }else if(isThreeOfAKind(playerHand)){
+        console.log("Player has three of a kind");
+        return 3;
+    }else if(isTwoPairs(playerHand)){
+        console.log("Player has two pairs");
+        return 2;
+    }else if(isPair(playerHand)){
+        console.log("Player has pair");
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -232,3 +270,10 @@ function getPlayerCardsWithoutSuit(playerCards){
     return playerCardsWithoutSuit;
 }
 
+function showWinner(){
+
+
+
+console.log()
+
+}
